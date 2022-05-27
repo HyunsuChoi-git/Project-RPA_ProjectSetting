@@ -21,13 +21,13 @@ labelname_pw = "PW"
 # placeholder 초기화
 ph_version = "3.3"
 ph_path = set.getFrameworkPath()
-ph_foldername = " 예) HYPER_OFFICE"
+ph_foldername = " 예) RPA_OFFICE"
 ph_code = " 예) cxxxxxxx"
 
 
 
 root = Tk()
-root.title("[HYPERLOUNGE] RPA프로젝트 세팅")
+root.title("[PROJECT] RPA프로젝트 세팅")
 root.geometry("+1000+450")
 root.resizable("False", "False")
 root.config(bg='cornsilk')
