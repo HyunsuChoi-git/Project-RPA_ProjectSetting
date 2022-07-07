@@ -72,40 +72,43 @@ def start_process(framework_path, project_createpath, project_foldername,
 
         ### 6. Legacy/Common 내부 변경하기
         common_sample_path = os.path.join(project_path, "Legacy/Common/Comm_{0}".format(sample))
-        os.rename(common_sample_path, common_sample_path.replace(sample, erp_initial))
+        isERPFolder = os.path.isdir(common_sample_path.replace(sample, erp_initial))
+        if not isERPFolder :
+            os.rename(common_sample_path, common_sample_path.replace(sample, erp_initial))
+            ### 7. Legacy/Common/ERP폴더 내부 변경하기
+            common_erp_path = os.path.join(project_path, "Legacy/Common/Comm_{0}".format(erp_initial))
+            for f in os.scandir(common_erp_path):
+                with open(f, "r", encoding="UTF8") as f_f:
+                    f_content = f_f.read()
 
+                f_content = f_content.replace(sample, erp_initial)
 
-        ### 7. Legacy/Common/ERP폴더 내부 변경하기
-        common_erp_path = os.path.join(project_path, "Legacy/Common/Comm_{0}".format(erp_initial))
-        for f in os.scandir(common_erp_path):
-            with open(f, "r", encoding="UTF8") as f_f:
-                f_content = f_f.read()
+                with open(f, "w", encoding="UTF8") as f_f:
+                    f_f.write(f_content)
 
-            f_content = f_content.replace(sample, erp_initial)
+                os.rename(f.path, f.path.replace(sample, erp_initial))    
 
-            with open(f, "w", encoding="UTF8") as f_f:
-                f_f.write(f_content)
-
-            os.rename(f.path, f.path.replace(sample, erp_initial))        
+    
 
 
         ### 8. Test 내부 변경하기
         test_sample_path = os.path.join(project_path, "Test/{0}".format(sample))
         test_erp_path = test_sample_path.replace(sample, erp_initial)
-        os.rename(test_sample_path, test_erp_path)
+        isERPTestFolder = os.path.isdir(test_erp_path)
+        if not isERPTestFolder : 
+            os.rename(test_sample_path, test_erp_path)
 
+            ### 9. Test/ERP폴더 내부 변경하기
+            for f in os.scandir(test_erp_path):
+                with open(f, "r", encoding="UTF8") as f_f:
+                    f_content = f_f.read()
 
-        ### 9. Test/ERP폴더 내부 변경하기
-        for f in os.scandir(test_erp_path):
-            with open(f, "r", encoding="UTF8") as f_f:
-                f_content = f_f.read()
+                f_content = f_content.replace(sample, erp_initial)
 
-            f_content = f_content.replace(sample, erp_initial)
+                with open(f, "w", encoding="UTF8") as f_f:
+                    f_f.write(f_content)
 
-            with open(f, "w", encoding="UTF8") as f_f:
-                f_f.write(f_content)
-
-            os.rename(f.path, f.path.replace(sample, erp_initial))
+                os.rename(f.path, f.path.replace(sample, erp_initial))
 
         
         ### 10. 자격증명 등록하기
